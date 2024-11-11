@@ -7,42 +7,49 @@ def get_user_input():
     input_float = [float(num.strip()) for num in input_split]
     return input_float
 
-def find_min_max_average(numbers):
+def find_min_max(numbers):
     if not numbers:
-        print("The list is empty. No calculation will be performed.")
-        return
-    average = sum(numbers) / len(numbers)
-    minimum = min(numbers)
-    maximum = max(numbers)
+        return None, None
+    return min(numbers), max(numbers)
 
-    print(f"Average = {average:.2f}")
-    print(f"Minimum: {minimum}")
-    print(f"Maximum: {maximum}")
+def calc_average(numbers):
+    if not numbers:
+        return None
+    return sum(numbers) / len(numbers)
 
 def sort_temperature(numbers):
     if not numbers:
         print("The list is empty. No sorting will be performed.")
         return
-    sorted_temps = sorted(numbers)  # Corrected the use of sorted()
+    sorted_temps = sorted(numbers)
     print(f"Sorted Temperature: {sorted_temps}")
 
 def calc_median_temperature(numbers):
+    if not numbers:
+        return None
     sorted_temps = sorted(numbers)
     length = len(sorted_temps)
 
-    # Calculate median
     if length % 2 == 1:
-        median = sorted_temps[length // 2]
+        return sorted_temps[length // 2]
     else:
         mid1 = sorted_temps[length // 2 - 1]
         mid2 = sorted_temps[length // 2]
-        median = (mid1 + mid2) / 2
+        return (mid1 + mid2) / 2
 
-    print(f"Median Temperature: {median}")
+# Only execute this code if running as the main script
+if __name__ == "__main__":
+    display_main_menu()
+    my_num = get_user_input()
+    min_val, max_val = find_min_max(my_num)
+    if min_val is not None and max_val is not None:
+        print(f"Minimum: {min_val}, Maximum: {max_val}")
 
-# Main Program Flow
-display_main_menu()
-my_num = get_user_input()
-find_min_max_average(my_num)
-sort_temperature(my_num)
-calc_median_temperature(my_num)
+    average = calc_average(my_num)
+    if average is not None:
+        print(f"Average = {average:.2f}")
+
+    sort_temperature(my_num)
+    median = calc_median_temperature(my_num)
+    if median is not None:
+        print(f"Median Temperature: {median}")
